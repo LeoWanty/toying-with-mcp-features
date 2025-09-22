@@ -10,7 +10,7 @@ from fastmcp.client.sampling import (
     RequestContext,
 )
 
-from toying_with_mcp_features.mcp_feature_server import mcp
+from toying_with_mcp_features.server import mcp
 
 llm = lmstudio.llm("openai/gpt-oss-20b")
 
