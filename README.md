@@ -9,7 +9,7 @@ This project is a playground for experimenting and testing MCP features.
 
 ## How to toy ?
 
-Either with **MCP Inspector** (see bellow Dev Mode) or a local client (start with copying the content of the `test_server.py`) in a notebook.
+Either with **MCP Inspector** (see bellow Dev Mode) or a **local MCP client** (start with copying the content of the `test_server.py`) in a notebook.
 
 ## Installation
 
