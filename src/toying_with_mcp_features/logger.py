@@ -26,6 +26,7 @@ console_handler.setFormatter(formatter)
 root_logger.addHandler(console_handler)
 
 # File handler
+SERVER_LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
 file_handler = logging.FileHandler(filename=SERVER_LOG_FILE, mode="a")
 file_handler.setLevel(log_level)
 file_handler.setFormatter(formatter)

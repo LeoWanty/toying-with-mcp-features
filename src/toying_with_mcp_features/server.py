@@ -14,6 +14,10 @@ class StructuredInput:
     accept: bool
 
 
+from fastmcp.client.sampling import SamplingMessage
+from mcp.types import TextContent
+
+
 @mcp.tool
 async def does_sampling_work(ctx: Context):
     """
@@ -22,7 +26,13 @@ async def does_sampling_work(ctx: Context):
     Returns:
         Any: The result of the sampling operation.
     """
-    return await ctx.sample("Does the MCP sampling work?", system_prompt="You're an assistant that answers questions after saying HEYYY BUDDY!")
+    messages = [
+        SamplingMessage(
+            role="user",
+            content=TextContent(type="text", text="Does the MCP sampling work?"),
+        )
+    ]
+    return await ctx.sample(messages)
 
 
 @mcp.tool

@@ -12,8 +12,6 @@ from fastmcp.client.sampling import (
 
 from toying_with_mcp_features.server import mcp
 
-llm = lmstudio.llm("openai/gpt-oss-20b")
-
 
 def input_given_type(expected_type, message_prefix: str | None = None):
     if message_prefix is None:
@@ -74,6 +72,7 @@ async def sampling_handler(
     params: SamplingParams,
     context: RequestContext
 ) -> str:
+    llm = lmstudio.llm("openai/gpt-oss-20b")
     logging.warning(f"Sampling handler operation with message: {messages}")
     message = "\n\n".join(
         [
@@ -93,17 +92,22 @@ client = Client(
     sampling_handler=sampling_handler,
 )
 
+@pytest.mark.skip(reason="Legacy test, covered by new tests in test_mcp_features.py")
 @pytest.mark.asyncio
 async def test_logging_feature():
     async with client:
         await client.call_tool("does_logging_work")
 
+
+@pytest.mark.skip(reason="Legacy test, covered by new tests in test_mcp_features.py")
 @pytest.mark.parametrize("type", ["None", "str", "int", "Literal", "structured"])
 @pytest.mark.asyncio
 async def test_ellicit_feature(type):
     async with client:
         return await client.call_tool("does_ellicit_work", {"type": type})
 
+
+@pytest.mark.skip(reason="Legacy test, covered by new tests in test_mcp_features.py")
 @pytest.mark.asyncio
 async def test_sampling_feature():
     async with client:
