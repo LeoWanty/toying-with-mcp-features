@@ -12,6 +12,8 @@ from fastmcp.client.sampling import (
 
 from toying_with_mcp_features.server import mcp
 
+llm = lmstudio.llm("openai/gpt-oss-20b")
+
 
 def input_given_type(expected_type, message_prefix: str | None = None):
     if message_prefix is None:
@@ -72,7 +74,6 @@ async def sampling_handler(
     params: SamplingParams,
     context: RequestContext
 ) -> str:
-    llm = lmstudio.llm("openai/gpt-oss-20b")
     logging.warning(f"Sampling handler operation with message: {messages}")
     message = "\n\n".join(
         [
