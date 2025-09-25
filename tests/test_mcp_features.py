@@ -1,10 +1,9 @@
-import importlib
+import asyncio
 
 import pytest
 from fastmcp.client import Client
 
-from toying_with_mcp_features import logger, server
-from toying_with_mcp_features.config import SERVER_LOG_FILE
+from toying_with_mcp_features import server
 
 
 @pytest.mark.asyncio
@@ -102,9 +101,6 @@ async def test_does_ellicit_work(test_type, mock_response, expected_str_response
     Tests that ctx.elicit calls are sent to the client's elicitation_handler
     and that the tool returns the handler's response.
     """
-    import asyncio
-    from toying_with_mcp_features.server import StructuredInput
-
     handler_was_called = asyncio.Event()
 
     async def mock_elicitation_handler(message, response_type, params, context):
