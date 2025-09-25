@@ -2,7 +2,6 @@ import logging
 from typing import Literal, get_origin, get_args
 
 import lmstudio
-import pytest
 from fastmcp.client import Client
 from fastmcp.client.sampling import (
     SamplingMessage,
@@ -93,26 +92,6 @@ client = Client(
     sampling_handler=sampling_handler,
 )
 
-@pytest.mark.skip(reason="Legacy test, covered by new tests in test_mcp_features.py")
-@pytest.mark.asyncio
-async def test_logging_feature():
-    async with client:
-        await client.call_tool("does_logging_work")
-
-
-@pytest.mark.skip(reason="Legacy test, covered by new tests in test_mcp_features.py")
-@pytest.mark.parametrize("type", ["None", "str", "int", "Literal", "structured"])
-@pytest.mark.asyncio
-async def test_ellicit_feature(type):
-    async with client:
-        return await client.call_tool("does_ellicit_work", {"type": type})
-
-
-@pytest.mark.skip(reason="Legacy test, covered by new tests in test_mcp_features.py")
-@pytest.mark.asyncio
-async def test_sampling_feature():
-    async with client:
-        await client.call_tool("does_sampling_work")
 
 async def main():
     async with client:
@@ -132,10 +111,10 @@ async def main():
         logging_result = await client.call_tool("does_logging_work")
         logging.warning(logging_result)
 
-        # for type in ["None", "str", "int", "Literal", "structured"]:
-        #     logging.warning(f">>> Testing ellicitation feature with type: {type}")
-        #     ellicit_result = await client.call_tool("does_ellicit_work", {"type": type})
-        #     logging.warning(ellicit_result)
+        for type in ["None", "str", "int", "Literal", "structured"]:
+            logging.warning(f">>> Testing ellicitation feature with type: {type}")
+            ellicit_result = await client.call_tool("does_ellicit_work", {"type": type})
+            logging.warning(ellicit_result)
 
         sampling_result = await client.call_tool("does_sampling_work")
         logging.warning(sampling_result)
