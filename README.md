@@ -3,9 +3,8 @@
 This project is a playground for experimenting and testing MCP features.
 
 - The `src/toying_with_mcp_features_/server.py` contains the tool's dummy features
-- The `test/test_server.py` proposes a `sampling_handler` and `elicitation_handler` for a local client with FastMCP
-
-*Still TODO* : Creating dummies for pytest testing (not working for now)
+- The `test/local_client_example.py` proposes a `sampling_handler` and `elicitation_handler` for a local client with FastMCP
+- The `test/test_server` proposes mock handlers for testing
 
 ## How to toy ?
 

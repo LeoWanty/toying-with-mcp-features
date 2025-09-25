@@ -22,7 +22,10 @@ async def does_sampling_work(ctx: Context):
     Returns:
         Any: The result of the sampling operation.
     """
-    return await ctx.sample("Does the MCP sampling work?", system_prompt="You're an assistant that answers questions after saying HEYYY BUDDY!")
+    return await ctx.sample(
+        "Does the MCP sampling work?",
+        system_prompt="You're an assistant that answers questions after saying HEYYY BUDDY!",
+    )
 
 
 @mcp.tool
