@@ -2,8 +2,20 @@ from dataclasses import dataclass
 from typing import Literal
 
 from fastmcp import FastMCP, Context
+from fastmcp.exceptions import ToolError
+from fastmcp.server.middleware import Middleware, MiddlewareContext
 
-mcp = FastMCP(name="test MCP sampling")
+class PrivacyMiddleware(Middleware):
+
+    async def on_call_tool(self, context: MiddlewareContext, call_next):
+        tool_name = context.message.name
+        tool = await context.fastmcp_context.fastmcp.get_tool(tool_name)
+        if "private" in tool.tags:
+            raise ToolError(f"Access denied to private tool: {tool_name}")
+        # return the tool result only since it is not private!
+        return await call_next(context)
+
+mcp = FastMCP(name="test MCP features")
 
 
 @dataclass
@@ -72,10 +84,16 @@ async def does_logging_work(ctx: Context):
     await ctx.warning("This is a test warning message.")
     await ctx.error("This is a test error message.")
     return "No error returned. Check the console to see test log messages"
+    
+@mcp.tool(tags={"private"})
+def  does_privacy_middleware_work():
+    return "This is a private function!"
 
 @mcp.tool()
 async def does_hello_world_work():
     return "Hello World!"
+    
+mcp.add_middleware(PrivacyMiddleware())
 
 if __name__ == "__main__":
     mcp.run()
