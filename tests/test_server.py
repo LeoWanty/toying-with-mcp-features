@@ -2,6 +2,7 @@ import asyncio
 
 import pytest
 from fastmcp.client import Client
+from fastmcp.exceptions import ToolError
 
 from toying_with_mcp_features import server
 
@@ -118,3 +119,12 @@ async def test_does_ellicit_work(test_type, mock_response, expected_str_response
         f"Ellicit works with type {test_type} and returns {expected_str_response}"
     )
     assert result.content[0].text == expected_return
+    
+    
+@pytest.mark.asyncio
+async def test_does_middleware_work():
+    async with Client(server.mcp) as client:
+        with pytest.raises(ToolError) as exc_info:
+            await client.call_tool("does_privacy_middleware_work", {})
+        assert "Access denied to private tool: does_privacy_middleware_work" in str(exc_info.value)
+
